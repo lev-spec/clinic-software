@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (doctors.length === 0) {
             const option = document.createElement("option");
             option.disabled = true;
-            option.textContent = "ექიმები არ მოიძებნა";
+            option.textContent = "თანამშრომლები არ მოიძებნა";
             doctorSelect.appendChild(option);
             return;
         }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinic Healthy | ექიმები</title>
+    <title>Clinic Healthy | თანამშრომლები</title>
     <link rel="stylesheet" href="dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
@@ -27,7 +27,7 @@
             <a href="calendar.html">📅 კალენდარი</a>
         </li>        
         <li class="menu-item">
-            <a href="doctros.html">🩺 ექიმები</a>
+            <a href="doctros.html">📃 თანამშრომლები</a>
         </li> 
         <li class="menu-item">
             <a href="services.html">📄 სერვისები</a>
@@ -54,10 +54,10 @@
 
 <div class="main_content">
     <div class="patients-header">
-        <h2>სამედიცინო პერსონალი</h2>
+        <h2>თანამშრომლები</h2>
         <div class="actions">
             <input type="text" id="search-doctor" placeholder="ძიება სახელით..." class="search-input">
-            <button id="add-doctor-btn" class="btn-primary">+ ექიმის დამატება</button>
+            <button id="add-doctor-btn" class="btn-primary">+ თანამშრომლის დამატება</button>
         </div>
     </div>
 
@@ -71,12 +71,12 @@
 <div id="doctor-modal" class="modal">
     <div class="modal-content">
         <span class="close-modal">&times;</span>
-        <h2>ექიმის დამატება</h2>
+        <h2>თანამშრომლის დამატება</h2>
         <form id="doctor-form">
             <input type="hidden" id="doctor-edit-id" value="">
             
             <fieldset>
-                <legend>ინფორმაცია ექიმზე</legend>
+                <legend>ინფორმაცია თანამშრომელზე</legend>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="docFirstName">სახელი *</label>
@@ -89,19 +89,40 @@
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="docRole">როლი *</label>
-                        <select id="docRole" name="docRole" required>
-                            <option value="doctor">ექიმი</option>
-                            <option value="admin">ადმინისტრატორი</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
                         <label for="docId">აიდი (ID) *</label>
                         <input type="text" id="docId" name="docId" required>
                     </div>
-                    <div class="form-group">
-                        <label for="docSpecialty">სპეციალობა *</label>
-                        <input type="text" id="docSpecialty" name="docSpecialty" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label>როლი *</label>
+                        <div class="tag-selected-items" id="role-tags"></div>
+                        <div class="custom-dropdown" id="role-dropdown">
+                            <div class="custom-dropdown-trigger" id="role-trigger">
+                                <span class="dropdown-placeholder">აირჩიეთ როლი...</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="custom-dropdown-menu" id="role-menu">
+                                <input type="text" class="dropdown-search" id="role-search" placeholder="ძიება...">
+                                <div class="dropdown-options" id="role-options"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row" id="specialty-group">
+                    <div class="form-group" style="flex: 1;">
+                        <label>სპეციალობა *</label>
+                        <div class="tag-selected-items" id="specialty-tags"></div>
+                        <div class="custom-dropdown" id="specialty-dropdown">
+                            <div class="custom-dropdown-trigger" id="specialty-trigger">
+                                <span class="dropdown-placeholder">აირჩიეთ სპეციალობა...</span>
+                                <i class="fa-solid fa-chevron-down"></i>
+                            </div>
+                            <div class="custom-dropdown-menu" id="specialty-menu">
+                                <input type="text" class="dropdown-search" id="specialty-search" placeholder="ძიება...">
+                                <div class="dropdown-options" id="specialty-options"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">
