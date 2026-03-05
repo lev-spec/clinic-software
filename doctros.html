@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | ექიმები</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <ul>
+        <li class="menu-item">
+            <a href="dashboard.html">🏠 მთავარი</a>
+        </li>
+
+        <li class="menu-item">
+            <a href="patients.html">👤 პაციენტების სია</a>
+        </li>
+        <li class="menu-item">
+            <a href="calendar.html">📅 კალენდარი</a>
+        </li>        
+        <li class="menu-item">
+            <a href="doctros.html">🩺 ექიმები</a>
+        </li> 
+        <li class="menu-item">
+            <a href="services.html">📄 სერვისები</a>
+        </li>
+        <li class="menu-item">
+            <a href="laboratory.html">🧪 ლაბორატორია</a>
+        </li>
+  
+        <li class="menu-item">
+            <a href="reports.html">📊 რეპორტები</a>
+        </li>  
+        <li class="menu-item">
+            <a href="settings.html">⚙️ პარამეტრები</a>
+        </li>
+        <li class="menu-item">
+            <a href="exit.html">🚪 გამოსვლა</a>
+        </li>
+
+    </ul>
+</nav>
+</div>
+</header>
+
+
+<div class="main_content">
+    <div class="patients-header">
+        <h2>სამედიცინო პერსონალი</h2>
+        <div class="actions">
+            <input type="text" id="search-doctor" placeholder="ძიება სახელით..." class="search-input">
+            <button id="add-doctor-btn" class="btn-primary">+ ექიმის დამატება</button>
+        </div>
+    </div>
+
+    <div id="doctors-list-container" class="patients-grid">
+        <!-- Doctors will be loaded here dynamically -->
+        <div class="loading-state">იტვირთება...</div>
+    </div>
+</div>
+
+<!-- Add/Edit Doctor Modal -->
+<div id="doctor-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>ექიმის დამატება</h2>
+        <form id="doctor-form">
+            <input type="hidden" id="doctor-edit-id" value="">
+            
+            <fieldset>
+                <legend>ინფორმაცია ექიმზე</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="docFirstName">სახელი *</label>
+                        <input type="text" id="docFirstName" name="docFirstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="docLastName">გვარი *</label>
+                        <input type="text" id="docLastName" name="docLastName" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="docRole">როლი *</label>
+                        <select id="docRole" name="docRole" required>
+                            <option value="doctor">ექიმი</option>
+                            <option value="admin">ადმინისტრატორი</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="docId">აიდი (ID) *</label>
+                        <input type="text" id="docId" name="docId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="docSpecialty">სპეციალობა *</label>
+                        <input type="text" id="docSpecialty" name="docSpecialty" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="docPhone">ტელეფონი</label>
+                        <input type="tel" id="docPhone" name="docPhone">
+                    </div>
+                    <div class="form-group">
+                        <label for="docEmail">ელ-ფოსტა</label>
+                        <input type="email" id="docEmail" name="docEmail">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="docUsername">მომხმარებლის სახელი *</label>
+                        <input type="text" id="docUsername" name="docUsername" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="docPassword">პაროლი *</label>
+                        <input type="password" id="docPassword" name="docPassword" required>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>ხელმოწერა</legend>
+                <div class="form-group" style="width: 100%;">
+                    <label>დახატეთ ხელმოწერა:</label>
+                    <div style="border: 1px solid #ccc; background: #fff;">
+                        <canvas id="signature-pad" width="400" height="150" style="touch-action: none;"></canvas>
+                    </div>
+                    <button type="button" id="clear-signature" style="margin-top: 5px; padding: 5px 10px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">გასუფთავება</button>
+                </div>
+            </fieldset>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">შენახვა</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+<script src="doctors.js"></script>
+
+</body>
+</html>

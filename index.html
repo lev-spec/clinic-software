@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | ავტორიზაცია</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="authorise_container">
+        <h2>Clinic Healthy პორტალი</h2>
+
+        <form id="login_form">
+            <fieldset>
+                <legend>ავტორიზაცია</legend>
+                <div class="form-group">
+                    <label for="username">მომხმარებლის სახელი:</label>
+                    <input type="text" id="username" placeholder="შეიყვანეთ მომხმარებლის სახელი" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">პაროლი:</label>
+                    <input type="password" id="password" placeholder="შეიყვანეთ პაროლი" required>
+                </div>
+
+                <div class="button_group">
+                    <button type="submit" id="login_btn">შესვლა</button>
+                </div>
+
+                <p id="result"></p>
+            </fieldset>
+        </form>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

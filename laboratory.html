@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | ლაბორატორია</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <ul>
+        <li class="menu-item">
+            <a href="dashboard.html">🏠 მთავარი</a>
+        </li>
+
+        <li class="menu-item">
+            <a href="patients.html">👤 პაციენტების სია</a>
+        </li>
+        <li class="menu-item">
+            <a href="calendar.html">📅 კალენდარი</a>
+        </li>        
+        <li class="menu-item">
+            <a href="doctros.html">🩺 ექიმები</a>
+        </li> 
+        <li class="menu-item">
+            <a href="services.html">📄 სერვისები</a>
+        </li>
+        <li class="menu-item active">
+            <a href="laboratory.html">🧪 ლაბორატორია</a>
+        </li>
+        <li class="menu-item">
+            <a href="reports.html">📊 რეპორტები</a>
+        </li>  
+        <li class="menu-item">
+            <a href="settings.html">⚙️ პარამეტრები</a>
+        </li>
+        <li class="menu-item">
+            <a href="exit.html">🚪 გამოსვლა</a>
+        </li>
+
+    </ul>
+</nav>
+</div>
+</header>
+
+
+<div class="main_content">
+    <div class="patients-header">
+        <h2>ლაბორატორიული კვლევები</h2>
+        <div class="actions">
+            <input type="text" id="search-lab" placeholder="ძიება პაციენტით ან კვლევით..." class="search-input">
+            <button id="add-lab-btn" class="btn-primary">+ კვლევის დამატება</button>
+        </div>
+    </div>
+    
+    <div id="lab-list-container" class="patients-grid">
+        <!-- Lab Orders will be loaded here dynamically -->
+        <div class="loading-state">იტვირთება...</div>
+    </div>
+</div>
+
+<!-- Add Lab Order Modal -->
+<div id="lab-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>ახალი კვლევის დანიშვნა</h2>
+        <form id="lab-form">
+            <input type="hidden" id="lab-edit-id" value="">
+            
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label for="patientSelect">პაციენტი *</label>
+                    <select id="patientSelect" name="patientSelect" required style="width: 100%; padding: 10px;">
+                        <option value="">აირჩიეთ პაციენტი...</option>
+                        <!-- Populated via JS -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group" style="flex: 2;">
+                    <label for="serviceSelect">ლაბორატორიული სერვისი *</label>
+                    <select id="serviceSelect" name="serviceSelect" required style="width: 100%; padding: 10px;">
+                        <option value="">აირჩიეთ კვლევა...</option>
+                        <!-- Populated via JS (Filtered Services) -->
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="testCode">კოდი</label>
+                    <input type="text" id="testCode" name="testCode" readonly style="background-color: #eee;">
+                </div>
+                <div class="form-group">
+                    <label for="price">ფასი (GEL)</label>
+                    <input type="number" id="price" name="price" readonly step="0.01" style="background-color: #eee;">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">შენახვა</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Result Entry Modal -->
+<div id="result-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-result-modal" style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+        <h2>კვლევის პასუხი</h2>
+        <form id="result-form">
+            <input type="hidden" id="result-order-id" value="">
+            
+            <div class="form-group">
+                <label for="resultText">შედეგი / პასუხი *</label>
+                <textarea id="resultText" name="resultText" rows="6" required style="width: 100%; padding: 10px;" placeholder="ჩაწერეთ ანალიზის პასუხი..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="doctorSelect">ექიმი (ხელმომწერი) *</label>
+                <select id="doctorSelect" name="doctorSelect" required style="width: 100%; padding: 10px;">
+                    <option value="">აირჩიეთ ექიმი...</option>
+                    <!-- Populated via JS -->
+                </select>
+                <small style="color: #666;">მხოლოდ ექიმები ხელმოწერით</small>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">შენახვა და დადასტურება</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+<script src="laboratory.js"></script>
+
+</body>
+</html>

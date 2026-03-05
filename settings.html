@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | პარამეტრები</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <ul>
+        <li class="menu-item">
+            <a href="dashboard.html">🏠 მთავარი</a>
+        </li>
+
+        <li class="menu-item">
+            <a href="patients.html">👤 პაციენტების სია</a>
+        </li>
+        <li class="menu-item">
+            <a href="calendar.html">📅 კალენდარი</a>
+        </li>        
+        <li class="menu-item">
+            <a href="doctros.html">🩺 ექიმები</a>
+        </li> 
+        <li class="menu-item">
+            <a href="services.html">📄 სერვისები</a>
+        </li>
+        <li class="menu-item">
+            <a href="laboratory.html">🧪 ლაბორატორია</a>
+        </li>
+  
+        <li class="menu-item">
+            <a href="reports.html">📊 რეპორტები</a>
+        </li>  
+        <li class="menu-item">
+            <a href="settings.html">⚙️ პარამეტრები</a>
+        </li>
+        <li class="menu-item">
+            <a href="exit.html">🚪 გამოსვლა</a>
+        </li>
+
+    </ul>
+</nav>
+</div>
+</header>
+
+
+<div class="main_content">
+    <h2>სისტემური პარამეტრები</h2>
+    <form style="max-width: 500px; margin-top: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <label style="display: block; margin-bottom: 10px; font-weight: bold;">კლინიკის სახელი</label>
+        <input type="text" id="clinic-name-input" value="Clinic Healthy" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; margin-bottom: 20px;">
+        
+        <label style="display: block; margin-bottom: 10px; font-weight: bold;">შეტყობინებები</label>
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+            <input type="checkbox" checked> ელ-ფოსტის შეტყობინებების ჩართვა
+        </div>
+        
+        <button type="button" style="background: #1a73e8; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">ცვლილებების შენახვა</button>
+    </form>
+
+    <h2 style="margin-top: 40px;">მონაცემების მართვა</h2>
+    <div style="max-width: 500px; margin-top: 20px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <p style="margin-bottom: 20px; color: #666;">კლინიკის მონაცემების გადატანა ან შენახვა.</p>
+        
+        <div style="display: flex; gap: 10px;">
+            <button id="backup-btn" style="background: #4caf50; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-download"></i> ბექაფი (შენახვა)
+            </button>
+            
+            <button id="restore-btn" style="background: #ff9800; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                <i class="fas fa-upload"></i> აღდგენა (ჩატვირთვა)
+            </button>
+            <input type="file" id="restore-input" style="display: none;" accept=".json">
+        </div>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+<script src="settings.js"></script>
+
+</body>
+</html>

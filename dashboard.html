@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Dashboard</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <ul>
+        <li class="menu-item">
+            <a href="dashboard.html">🏠 მთავარი</a>
+        </li>
+
+        <li class="menu-item">
+            <a href="patients.html">👤 პაციენტების სია</a>
+        </li>
+        <li class="menu-item">
+            <a href="calendar.html">📅 კალენდარი</a>
+        </li>        
+        <li class="menu-item">
+            <a href="doctros.html">🩺 ექიმები</a>
+        </li> 
+        <li class="menu-item">
+            <a href="services.html">📄 სერვისები</a>
+        </li>
+        <li class="menu-item">
+            <a href="laboratory.html">🧪 ლაბორატორია</a>
+        </li>
+  
+        <li class="menu-item">
+            <a href="reports.html">📊 რეპორტები</a>
+        </li>  
+        <li class="menu-item">
+            <a href="settings.html">⚙️ პარამეტრები</a>
+        </li>
+        <li class="menu-item">
+            <a href="exit.html">🚪 გამოსვლა</a>
+        </li>
+
+    </ul>
+</nav>
+</div>
+</header>
+
+
+<div class="main_content">
+    <h2>მიმოხილვა</h2>
+    <div class="clinic_dashboard_informations">
+
+        <!-- PATIENTS -->
+        <div class="dashboard-card patients" onclick="window.location.href='patients.html'" style="cursor: pointer;">
+            <div class="card-title">პაციენტები</div>
+            <div class="card-bottom">
+                <span class="poi" id="total-patients-count">0</span>
+                <i class="fa-solid fa-person"></i>
+            </div>
+        </div>
+
+        <!-- AVAILABLE STAFF -->
+        <div class="dashboard-card available_staff" onclick="window.location.href='doctros.html'" style="cursor: pointer;">
+            <div class="card-title">პერსონალი</div>
+            <div class="card-bottom">
+                <span class="poi" id="available-staff-count">10</span>
+                <i class="fa-solid fa-user-doctor"></i>
+            </div>
+        </div>
+
+        <!-- APPOINTMENTS -->
+        <div class="dashboard-card appointments" onclick="window.location.href='calendar.html'" style="cursor: pointer;">
+            <div class="card-title">ვიზიტები</div>
+            <div class="card-bottom">
+                <span class="poi" id="appointments-count">12</span>
+                <i class="fa-regular fa-calendar-check"></i>
+            </div>
+        </div>
+
+        <!-- TODAY PATIENTS -->
+        <div class="dashboard-card today_patients" onclick="window.location.href='patients.html'" style="cursor: pointer;">
+            <div class="card-title">დღევანდელი პაციენტები</div>
+            <div class="card-bottom">
+                <span class="poi" id="today-patients-count">8</span>
+                <i class="fa-solid fa-user"></i>
+            </div>
+        </div>
+
+        <!--LAB TESTS-->
+        <div class="dashboard-card lab_tests" onclick="window.location.href='reports.html'" style="cursor: pointer;">
+            <div class="card-title">ლაბორატორია</div>
+            <div class="card-bottom">
+                <span class="poi" id="lab-tests-count">24</span>
+                <i class="fa-solid fa-vial"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- CHARTS SECTION -->
+    <div class="charts_container">
+        <div class="chart_card">
+            <h3>პაციენტების სტატისტიკა</h3>
+            <canvas id="patientsChart"></canvas>
+        </div>
+        <div class="chart_card">
+            <h3>განყოფილებები</h3>
+            <canvas id="departmentsChart"></canvas>
+        </div>
+    </div>
+
+    <!-- RECENT PATIENTS TABLE -->
+    <div class="recent_appointments">
+        <h3>ბოლო პაციენტები</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>პაციენტის სახელი</th>
+                    <th>პირადი ნომერი</th>
+                    <th>ტელეფონი</th>
+                    <th>სტატუსი</th>
+                </tr>
+            </thead>
+            <tbody id="dashboard-patients-table-body">
+                <!-- Rows will be populated by JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="dashboard.js"></script>
+
+</body>
+</html>

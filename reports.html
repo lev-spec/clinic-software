@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | რეპორტები</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <ul>
+        <li class="menu-item">
+            <a href="dashboard.html">🏠 მთავარი</a>
+        </li>
+
+        <li class="menu-item">
+            <a href="patients.html">👤 პაციენტების სია</a>
+        </li>
+        <li class="menu-item">
+            <a href="calendar.html">📅 კალენდარი</a>
+        </li>        
+        <li class="menu-item">
+            <a href="doctros.html">🩺 ექიმები</a>
+        </li> 
+        <li class="menu-item">
+            <a href="services.html">📄 სერვისები</a>
+        </li>
+        <li class="menu-item">
+            <a href="laboratory.html">🧪 ლაბორატორია</a>
+        </li>
+  
+        <li class="menu-item">
+            <a href="reports.html">📊 რეპორტები</a>
+        </li>  
+        <li class="menu-item">
+            <a href="settings.html">⚙️ პარამეტრები</a>
+        </li>
+        <li class="menu-item">
+            <a href="exit.html">🚪 გამოსვლა</a>
+        </li>
+
+    </ul>
+</nav>
+</div>
+</header>
+
+
+<div class="main_content">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>ანალიტიკა და რეპორტები</h2>
+        <button id="print-report-btn" style="background: #607d8b; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer;">
+            <i class="fa fa-print"></i> ბეჭდვა
+        </button>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; gap: 20px; flex-wrap: wrap;" class="stats-container">
+        <div style="flex: 1; min-width: 250px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h3>სრული შემოსავალი</h3>
+            <p id="total-revenue" style="font-size: 24px; font-weight: bold; color: #4caf50;">0 GEL</p>
+        </div>
+        <div style="flex: 1; min-width: 250px; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+            <h3>ჩატარებული სერვისები</h3>
+            <p id="total-services" style="font-size: 24px; font-weight: bold; color: #2196f3;">0</p>
+        </div>
+    </div>
+
+    <div id="detailed-reports" style="margin-top: 30px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <h3>დეტალური რეპორტი</h3>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 15px;">
+            <thead>
+                <tr style="background: #f5f5f5; text-align: left;">
+                    <th style="padding: 10px; border-bottom: 2px solid #ddd;">თარიღი</th>
+                    <th style="padding: 10px; border-bottom: 2px solid #ddd;">პაციენტი</th>
+                    <th style="padding: 10px; border-bottom: 2px solid #ddd;">სერვისი</th>
+                    <th style="padding: 10px; border-bottom: 2px solid #ddd;">ექიმი</th>
+                    <th style="padding: 10px; border-bottom: 2px solid #ddd;">ფასი</th>
+                </tr>
+            </thead>
+            <tbody id="reports-table-body">
+                <!-- Data will be populated here -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+<script src="reports.js"></script>
+
+</body>
+</html>

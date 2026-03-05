@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | კალენდარი</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        .calendar-container {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .calendar-header button {
+            background: #1a73e8;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .calendar-day-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            background: #f0f0f0;
+        }
+        .calendar-day {
+            min-height: 100px;
+            border: 1px solid #ddd;
+            padding: 5px;
+            position: relative;
+            cursor: pointer;
+        }
+        .calendar-day:hover {
+            background-color: #f9f9f9;
+        }
+        .day-number {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .appointment-dot {
+            background-color: #e8f0fe;
+            color: #1a73e8;
+            font-size: 10px;
+            padding: 2px 4px;
+            border-radius: 4px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .appointment-dot.status-cancelled {
+            background-color: #fce8e6;
+            color: #c5221f;
+            text-decoration: line-through;
+        }
+        .appointment-dot.status-arrived {
+            background-color: #e6f4ea;
+            color: #137333;
+        }
+        /* Modal Styles */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1000; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgba(0,0,0,0.4); 
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%;
+            border-radius: 8px;
+        }
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-results {
+            border: 1px solid #ddd;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;
+            position: absolute;
+            background: white;
+            width: 100%;
+            z-index: 10;
+        }
+        .search-result-item {
+            padding: 8px;
+            cursor: pointer;
+        }
+        .search-result-item:hover {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <ul>
+        <li class="menu-item">
+            <a href="dashboard.html">🏠 მთავარი</a>
+        </li>
+
+        <li class="menu-item">
+            <a href="patients.html">👤 პაციენტების სია</a>
+        </li>
+        <li class="menu-item">
+            <a href="calendar.html">📅 კალენდარი</a>
+        </li>        
+        <li class="menu-item">
+            <a href="doctros.html">🩺 ექიმები</a>
+        </li> 
+        <li class="menu-item">
+            <a href="services.html">📄 სერვისები</a>
+        </li>
+        <li class="menu-item">
+            <a href="laboratory.html">🧪 ლაბორატორია</a>
+        </li>
+  
+        <li class="menu-item">
+            <a href="reports.html">📊 რეპორტები</a>
+        </li>  
+        <li class="menu-item">
+            <a href="settings.html">⚙️ პარამეტრები</a>
+        </li>
+        <li class="menu-item">
+            <a href="exit.html">🚪 გამოსვლა</a>
+        </li>
+
+    </ul>
+</nav>
+</div>
+</header>
+
+
+<div class="main_content">
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button id="prev-month">&lt; წინა</button>
+            <h2 id="calendar-header">თვე წელი</h2>
+            <button id="next-month">შემდეგი &gt;</button>
+            <button id="add-appointment-btn" style="background-color: #4caf50;">+ ვიზიტის დამატება</button>
+        </div>
+        
+        <div class="calendar-grid-header" style="display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; font-weight: bold; margin-bottom: 10px;">
+            <div>კვირა</div>
+            <div>ორშაბათი</div>
+            <div>სამშაბათი</div>
+            <div>ოთხშაბათი</div>
+            <div>ხუთშაბათი</div>
+            <div>პარასკევი</div>
+            <div>შაბათი</div>
+        </div>
+
+        <div id="calendar-grid" class="calendar-grid">
+            <!-- Calendar Days Generated Here -->
+        </div>
+    </div>
+</div>
+
+<!-- Appointment Details Modal -->
+<div id="appointment-details-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-details-modal" style="color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+        <h2>ვიზიტის დეტალები</h2>
+        <div id="appointment-details-content">
+            <p><strong>პაციენტი:</strong> <span id="detail-patient"></span></p>
+            <p><strong>სერვისი:</strong> <span id="detail-service"></span></p>
+            <p><strong>ექიმი:</strong> <span id="detail-doctor"></span></p>
+            <p><strong>დრო:</strong> <span id="detail-time"></span></p>
+            <p><strong>მიზეზი:</strong> <span id="detail-reason"></span></p>
+            
+            <div class="form-group" style="margin-top: 20px;">
+                <label for="detail-status">სტატუსი</label>
+                <select id="detail-status">
+                    <option value="Scheduled">დაგეგმილი</option>
+                    <option value="Arrived">მივიდა / დასრულდა</option>
+                    <option value="Cancelled">გაუქმებული</option>
+                </select>
+            </div>
+
+            <button id="update-status-btn" style="background: #1a73e8; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%;">სტატუსის განახლება</button>
+            <button id="delete-appointment-btn" style="background: #d93025; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%; margin-top: 10px;">ვიზიტის წაშლა</button>
+        </div>
+    </div>
+</div>
+
+<!-- Appointment Modal -->
+<div id="appointment-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>ახალი ვიზიტის დამატება</h2>
+        <form id="appointment-form">
+            <div class="form-group" style="position: relative;">
+                <label for="patient-search">პაციენტის ძიება (სახელი ან პირადი ნომერი)</label>
+                <input type="text" id="patient-search" placeholder="ჩაწერეთ სახელი ან ID..." autocomplete="off">
+                <div id="patient-search-results" class="search-results"></div>
+                <div id="selected-patient-display" style="margin-top: 5px; color: green;"></div>
+                <input type="hidden" id="selected-patient-id" required>
+            </div>
+
+            <div class="form-group">
+                <label for="appointment-date">თარიღი</label>
+                <input type="date" id="appointment-date" required>
+            </div>
+
+            <div class="form-group">
+                <label for="appointment-time">დრო</label>
+                <input type="time" id="appointment-time" required>
+            </div>
+
+            <div class="form-group">
+                <label for="service-select">სერვისი</label>
+                <select id="service-select" required>
+                    <option value="" disabled selected>აირჩიეთ სერვისი</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="price-container" style="display: none;">
+                 <label>ფასი</label>
+                 <div style="display: flex; align-items: center; gap: 10px;">
+                     <span id="original-price-display" style="font-weight: bold; color: #555;"></span>
+                     <button type="button" id="edit-price-btn" style="background: #ff9800; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">ფასის რედაქტირება</button>
+                     <input type="number" id="custom-price-input" style="width: 100px; display: none;" placeholder="ახალი ფასი">
+                 </div>
+            </div>
+
+            <div class="form-group">
+                <label for="doctor-select">ექიმი</label>
+                <select id="doctor-select" required>
+                    <option value="" disabled selected>აირჩიეთ ექიმი</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="appointment-reason">ვიზიტის მიზეზი</label>
+                <textarea id="appointment-reason" rows="3" placeholder="ჩაწერეთ მიზეზი..."></textarea>
+            </div>
+
+            <button type="submit" style="background: #1a73e8; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%;">შენახვა</button>
+        </form>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+<script src="calendar.js"></script>
+
+</body>
+</html>

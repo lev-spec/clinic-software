@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | სერვისები</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <ul>
+        <li class="menu-item">
+            <a href="dashboard.html">🏠 მთავარი</a>
+        </li>
+
+        <li class="menu-item">
+            <a href="patients.html">👤 პაციენტების სია</a>
+        </li>
+        <li class="menu-item">
+            <a href="calendar.html">📅 კალენდარი</a>
+        </li>        
+        <li class="menu-item">
+            <a href="doctros.html">🩺 ექიმები</a>
+        </li> 
+        <li class="menu-item">
+            <a href="services.html">📄 სერვისები</a>
+        </li>
+        <li class="menu-item">
+            <a href="laboratory.html">🧪 ლაბორატორია</a>
+        </li>
+        <li class="menu-item">
+            <a href="reports.html">📊 რეპორტები</a>
+        </li>  
+        <li class="menu-item">
+            <a href="settings.html">⚙️ პარამეტრები</a>
+        </li>
+        <li class="menu-item">
+            <a href="exit.html">🚪 გამოსვლა</a>
+        </li>
+
+    </ul>
+</nav>
+</div>
+</header>
+
+
+<div class="main_content">
+    <div class="patients-header">
+        <h2>სერვისების სია</h2>
+        <div class="actions">
+            <input type="text" id="search-service" placeholder="ძიება დასახელებით ან კოდით..." class="search-input">
+            <button id="add-service-btn" class="btn-primary">+ სერვისის დამატება</button>
+        </div>
+    </div>
+    
+    <div id="services-list-container" class="patients-grid">
+        <!-- Services will be loaded here dynamically -->
+        <div class="loading-state">იტვირთება...</div>
+    </div>
+</div>
+
+<!-- Add Service Modal -->
+<div id="service-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>ახალი სერვისის დამატება</h2>
+        <form id="service-form">
+            <input type="hidden" id="service-edit-id" value="">
+            
+            <div class="form-row" style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 10px;">სერვისის კლასიფიკაცია *</label>
+                <div style="display: flex; gap: 20px;">
+                    <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                        <input type="radio" name="serviceClassification" value="Visiting" checked> სავიზიტო
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;">
+                        <input type="radio" name="serviceClassification" value="Laboratory"> ლაბორატორიული
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceName">სერვისის დასახელება *</label>
+                    <input type="text" id="serviceName" name="serviceName" required>
+                </div>
+                <div class="form-group">
+                    <label for="serviceCode">სერვისის კოდი *</label>
+                    <input type="text" id="serviceCode" name="serviceCode" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="cptCode">CPT კოდი</label>
+                    <input type="text" id="cptCode" name="cptCode">
+                </div>
+                <div class="form-group">
+                    <label for="category">კატეგორია</label>
+                    <input type="text" id="category" name="category">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="price">თანხა (GEL) *</label>
+                    <input type="number" id="price" name="price" required step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="insuranceCompany">სადაზღვევო კომპანია</label>
+                    <input type="text" id="insuranceCompany" name="insuranceCompany">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="duration">ხანგრძლივობა (წუთები)</label>
+                    <input type="number" id="duration" name="duration">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="serviceType">სერვისის ტიპი</label>
+                    <select id="serviceType" name="serviceType">
+                        <option value="Standard">სტანდარტული</option>
+                        <option value="Program">პროგრამა</option>
+                        <option value="Voucher">ვაუჩერი</option>
+                    </select>
+                </div>
+                <div class="form-group" style="display: flex; align-items: center; margin-top: 25px;">
+                    <input type="checkbox" id="formIV100" name="formIV100" style="width: auto; margin-right: 10px;">
+                    <label for="formIV100" style="margin-bottom: 0;">ფორმა IV-100 ასახვა</label>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">შენახვა</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+<script src="services.js"></script>
+
+</body>
+</html>

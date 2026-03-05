@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | პაციენტები</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <ul>
+        <li class="menu-item">
+            <a href="dashboard.html">🏠 მთავარი</a>
+        </li>
+
+        <li class="menu-item">
+            <a href="patients.html">👤 პაციენტების სია</a>
+        </li>
+        <li class="menu-item">
+            <a href="calendar.html">📅 კალენდარი</a>
+        </li>        
+        <li class="menu-item">
+            <a href="doctros.html">🩺 ექიმები</a>
+        </li> 
+        <li class="menu-item">
+            <a href="services.html">📄 სერვისები</a>
+        </li>
+        <li class="menu-item">
+            <a href="laboratory.html">🧪 ლაბორატორია</a>
+        </li>
+  
+        <li class="menu-item">
+            <a href="reports.html">📊 რეპორტები</a>
+        </li>  
+        <li class="menu-item">
+            <a href="settings.html">⚙️ პარამეტრები</a>
+        </li>
+        <li class="menu-item">
+            <a href="exit.html">🚪 გამოსვლა</a>
+        </li>
+
+    </ul>
+</nav>
+</div>
+</header>
+
+
+<div class="main_content">
+    <div class="patients-header">
+        <h2>პაციენტების სია</h2>
+        <div class="actions">
+            <input type="text" id="search-patient" placeholder="ძიება სახელით ან პირადი ნომრით..." class="search-input">
+            <button id="add-patient-btn" class="btn-primary">+ პაციენტის დამატება</button>
+        </div>
+    </div>
+    
+    <div id="patients-list-container" class="patients-grid">
+        <!-- Patients will be loaded here dynamically -->
+        <div class="loading-state">იტვირთება...</div>
+    </div>
+</div>
+
+<!-- Add Patient Modal -->
+<div id="patient-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>ახალი პაციენტის დამატება</h2>
+        <form id="patient-form">
+            <input type="hidden" id="edit-mode-id" value="">
+            
+            <!-- Section 1: Personal Identification -->
+            <fieldset>
+                <legend>1. პერსონალური ინფორმაცია (სავალდებულო)</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">სახელი *</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">გვარი *</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="personalId">პირადი ნომერი (11 ციფრი) *</label>
+                        <input type="text" id="personalId" name="personalId" pattern="\d{11}" title="უნდა შედგებოდეს 11 ციფრისგან" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">დაბადების თარიღი *</label>
+                        <input type="date" id="dob" name="dob" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender">სქესი *</label>
+                        <select id="gender" name="gender" required>
+                            <option value="">აირჩიეთ...</option>
+                            <option value="Male">მამრობითი</option>
+                            <option value="Female">მდედრობითი</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="citizenship">მოქალაქეობა *</label>
+                        <select id="citizenship" name="citizenship" required>
+                            <option value="Georgia">საქართველო</option>
+                            <option value="Foreign">უცხო ქვეყანა</option>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Section 2: Contact Information -->
+            <fieldset>
+                <legend>2. საკონტაქტო ინფორმაცია</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">ტელეფონი (მობილური) *</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">ელ-ფოსტა (არასავალდებულო)</label>
+                        <input type="email" id="email" name="email">
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="addressActual">ფაქტიური მისამართი *</label>
+                    <input type="text" id="addressActual" name="addressActual" required placeholder="ქალაქი, ქუჩა, ბინა">
+                </div>
+                <div class="form-group full-width">
+                    <label for="addressLegal">იურიდიული მისამართი *</label>
+                    <input type="text" id="addressLegal" name="addressLegal" required placeholder="იგივე რაც ფაქტიური თუ ემთხვევა">
+                </div>
+            </fieldset>
+
+            <!-- Section 3: Medical & Administrative -->
+            <fieldset>
+                <legend>3. სამედიცინო და ადმინისტრაციული</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bloodGroup">სისხლის ჯგუფი და რეზუსი</label>
+                        <select id="bloodGroup" name="bloodGroup">
+                            <option value="">უცნობი</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">პაციენტის სტატუსი *</label>
+                        <select id="status" name="status" required>
+                            <option value="Active">აქტიური</option>
+                            <option value="Inactive">არააქტიური</option>
+                            <option value="Deceased">გარდაცვლილი</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="allergies" style="color: red; font-weight: bold;">ალერგიები (კრიტიკული) *</label>
+                    <textarea id="allergies" name="allergies" rows="2" placeholder="ჩამოთვალეთ ალერგიები..." style="border-color: red;"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="familyDoctor">ოჯახის ექიმი</label>
+                        <input type="text" id="familyDoctor" name="familyDoctor">
+                    </div>
+                    <div class="form-group">
+                        <label for="diagnosis">ძირითადი დიაგნოზი / პრობლემა</label>
+                        <input type="text" id="diagnosis" name="diagnosis" placeholder="ვიზიტის მიზეზი">
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Section 4: Insurance Module -->
+            <fieldset>
+                <legend>4. დაზღვევა</legend>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="insuranceCompany">სადაზღვევო კომპანია</label>
+                        <input type="text" id="insuranceCompany" name="insuranceCompany">
+                    </div>
+                    <div class="form-group">
+                        <label for="policyNumber">პოლისის ნომერი</label>
+                        <input type="text" id="policyNumber" name="policyNumber">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="insuranceType">დაზღვევის ტიპი</label>
+                    <select id="insuranceType" name="insuranceType">
+                        <option value="">არ აქვს</option>
+                        <option value="Corporate">კორპორატიული</option>
+                        <option value="Individual">ინდივიდუალური</option>
+                        <option value="Universal">საყოველთაო ჯანდაცვა</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <!-- Consent -->
+            <div class="form-group consent-group">
+                <input type="checkbox" id="consent" name="consent" required>
+                <label for="consent">ვეთანხმები ჩემი პერსონალური მონაცემების დამუშავებას კანონმდებლობის შესაბამისად.</label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="submit-btn">შენახვა</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- View Patient Modal -->
+<div id="view-patient-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-view-modal" style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+        <h2>პაციენტის დეტალები</h2>
+        <div id="view-patient-details" class="patient-details-view">
+            <!-- Details will be injected here -->
+        </div>
+    </div>
+</div>
+
+<!-- Patient History Modal -->
+<div id="history-modal" class="modal">
+    <div class="modal-content" style="width: 80%; max-width: 900px;">
+        <span class="close-history-modal" style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+        <h2>პაციენტის ისტორია</h2>
+        <div id="history-patient-info" style="margin-bottom: 20px; font-weight: bold;"></div>
+        
+        <div class="actions" style="margin: 20px 0; display: flex; justify-content: flex-start; gap: 10px;">
+             <button id="print-anketa-btn" class="btn-secondary" style="background-color: #009688; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">📄 ანკეტის ბეჭდვა</button>
+             <button id="print-history-btn" class="btn-secondary" style="background-color: #607d8b; color: white; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">🖨️ ისტორიის ბეჭდვა</button>
+        </div>
+
+        <table class="history-table" style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: #f2f2f2;">
+                    <th style="padding: 10px; border: 1px solid #ddd;">თარიღი</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">სერვისი</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">კოდი</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">თანხა</th>
+                    <th style="padding: 10px; border: 1px solid #ddd;">ექიმი</th>
+                </tr>
+            </thead>
+            <tbody id="history-table-body">
+                <!-- History rows -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<script src="dashboard.js"></script>
+<script src="patients.js"></script>
+
+</body>
+</html>
