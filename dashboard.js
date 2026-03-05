@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 userInfoDiv.innerHTML = `
                     <div style="font-weight: bold; margin-bottom: 5px; font-size: 1.1em;">${currentUser.firstName} ${currentUser.lastName}</div>
                     <div style="font-size: 0.9em; opacity: 0.9; color: #bbdefb;">@${currentUser.username}</div>
-                    <div style="font-size: 0.8em; opacity: 0.6; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px;">${currentUser.role === 'admin' ? 'ადმინისტრატორი' : 'ექიმი'}</div>
+                    <div style="font-size: 0.8em; opacity: 0.6; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px;">${currentUser.originalRoles || (currentUser.role === 'admin' ? 'ადმინისტრატორი' : 'ექიმი')}</div>
                 `;
             }
             navContainer.appendChild(userInfoDiv);

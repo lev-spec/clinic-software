@@ -36,8 +36,13 @@ document.addEventListener("DOMContentLoaded", function () {
             const foundDoctor = doctors.find(d => d.username === username && d.password === password);
 
             if (foundDoctor) {
+                // Check if employee has administrator role among their roles
+                const roles = foundDoctor.role ? foundDoctor.role.split(',').map(r => r.trim()) : [];
+                const hasAdminRole = roles.includes('ადმინისტრატორი');
+
                 const user = {
-                    role: foundDoctor.role || "doctor",
+                    role: hasAdminRole ? "admin" : "doctor",
+                    originalRoles: foundDoctor.role || "",
                     firstName: foundDoctor.firstName,
                     lastName: foundDoctor.lastName,
                     username: foundDoctor.username,
