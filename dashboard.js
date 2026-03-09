@@ -35,8 +35,52 @@ document.addEventListener("DOMContentLoaded", function () {
                 `;
             }
 
-            userInfoBar.appendChild(userInfoBadge);
-            mainContent.insertBefore(userInfoBar, mainContent.firstChild);
+            // Inject User Info badge integrated with page headers to avoid pushing content down
+            const h2 = mainContent.querySelector('h2');
+            let parent = h2 ? h2.parentElement : null;
+            let inserted = false;
+
+            if (parent && parent !== mainContent && (parent.classList.contains('patients-header') || parent.classList.contains('calendar-header') || parent.style.display.includes('flex') || window.getComputedStyle(parent).display.includes('flex'))) {
+                let actionsDiv = parent.querySelector('.actions, .calendar-controls');
+                if (actionsDiv) {
+                    actionsDiv.style.display = 'flex';
+                    actionsDiv.style.alignItems = 'center';
+                    actionsDiv.style.gap = '15px';
+                    actionsDiv.appendChild(userInfoBadge);
+                } else {
+                    let siblings = Array.from(parent.children).filter(c => c !== h2 && c.tagName !== 'SCRIPT');
+                    if (siblings.length > 0) {
+                        let rightContainer = document.createElement('div');
+                        rightContainer.style.display = 'flex';
+                        rightContainer.style.alignItems = 'center';
+                        rightContainer.style.gap = '15px';
+                        parent.appendChild(rightContainer);
+                        siblings.forEach(s => rightContainer.appendChild(s));
+                        rightContainer.appendChild(userInfoBadge);
+                    } else {
+                        parent.appendChild(userInfoBadge);
+                    }
+                }
+                inserted = true;
+            } else if (h2) {
+                userInfoBar.style.display = 'flex';
+                userInfoBar.style.justifyContent = 'space-between';
+                userInfoBar.style.alignItems = 'center';
+                userInfoBar.style.marginBottom = '20px';
+                userInfoBar.style.flexWrap = 'wrap';
+                userInfoBar.style.gap = '15px';
+                
+                h2.parentNode.insertBefore(userInfoBar, h2);
+                userInfoBar.appendChild(h2);
+                h2.style.margin = '0';
+                userInfoBar.appendChild(userInfoBadge);
+                inserted = true;
+            }
+
+            if (!inserted) {
+                userInfoBar.appendChild(userInfoBadge);
+                mainContent.insertBefore(userInfoBar, mainContent.firstChild);
+            }
         }
 
         // --- Generate Sidebar Menu based on Roles ---
