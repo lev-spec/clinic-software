@@ -12,30 +12,140 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (currentUser && !isLoginPage) {
-        // Inject User Info into Sidebar
+        // Inject User Info as a floating badge
+        const userInfoDiv = document.createElement("div");
+        userInfoDiv.id = "user-info-panel";
+        userInfoDiv.style.position = "fixed";
+        userInfoDiv.style.top = "15px";
+        userInfoDiv.style.right = "20px";
+        userInfoDiv.style.background = "#fff";
+        userInfoDiv.style.padding = "8px 15px";
+        userInfoDiv.style.borderRadius = "20px";
+        userInfoDiv.style.boxShadow = "0 2px 5px rgba(0,0,0,0.1)";
+        userInfoDiv.style.color = "#333";
+        userInfoDiv.style.fontSize = "0.9em";
+        userInfoDiv.style.zIndex = "1000";
+        userInfoDiv.style.display = "flex";
+        userInfoDiv.style.alignItems = "center";
+        userInfoDiv.style.gap = "10px";
+
+        if (currentUser.username === 'admin1234') {
+            userInfoDiv.innerHTML = `<strong>ადმინისტრაცია</strong>`;
+        } else {
+            userInfoDiv.innerHTML = `
+                <div style="width: 28px; height: 28px; background: #2196f3; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                    ${currentUser.firstName.charAt(0)}${currentUser.lastName.charAt(0)}
+                </div>
+                <div>
+                    <div style="font-weight: bold; line-height: 1.2;">${currentUser.firstName} ${currentUser.lastName}</div>
+                    <div style="font-size: 0.8em; color: #666;">${currentUser.originalRoles || (currentUser.role === 'admin' ? 'ადმინისტრატორი' : 'ექიმი')}</div>
+                </div>
+            `;
+        }
+        document.body.appendChild(userInfoDiv);
+
+        // --- Generate Sidebar Menu based on Roles ---
         const navContainer = document.querySelector(".bottom_left_container");
         if (navContainer) {
-            const userInfoDiv = document.createElement("div");
-            userInfoDiv.id = "user-info-panel";
-            userInfoDiv.style.marginTop = "auto";
-            userInfoDiv.style.padding = "15px";
-            userInfoDiv.style.color = "white";
-            userInfoDiv.style.textAlign = "center";
-            userInfoDiv.style.borderTop = "1px solid rgba(255,255,255,0.1)";
-            userInfoDiv.style.background = "rgba(0,0,0,0.2)";
-            
-            if (currentUser.username === 'admin1234') {
-                userInfoDiv.innerHTML = `
-                    <div style="font-weight: bold; font-size: 1.2em;">ადმინისტრაცია</div>
-                `;
+            let ul = navContainer.querySelector("ul");
+            if (!ul) {
+                ul = document.createElement("ul");
+                ul.id = "sidebar-menu";
+                navContainer.appendChild(ul);
             } else {
-                userInfoDiv.innerHTML = `
-                    <div style="font-weight: bold; margin-bottom: 5px; font-size: 1.1em;">${currentUser.firstName} ${currentUser.lastName}</div>
-                    <div style="font-size: 0.9em; opacity: 0.9; color: #bbdefb;">@${currentUser.username}</div>
-                    <div style="font-size: 0.8em; opacity: 0.6; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px;">${currentUser.originalRoles || (currentUser.role === 'admin' ? 'ადმინისტრატორი' : 'ექიმი')}</div>
-                `;
+                ul.id = "sidebar-menu";
+                ul.innerHTML = ""; // Clear existing static menu
             }
-            navContainer.appendChild(userInfoDiv);
+
+            const userOriginalRoles = currentUser.originalRoles ? currentUser.originalRoles.split(',').map(r => r.trim()) : [];
+            if (currentUser.role === 'admin' && userOriginalRoles.length === 0) {
+                userOriginalRoles.push('ადმინისტრატორი'); // Fallback
+            }
+
+            const isMedical = userOriginalRoles.some(r => ["ექიმი", "ექთანი", "ლაბორანტი", "რენტგენოლოგი", "ექოსკოპისტი", "პარამედიკოსი", "ფარმაცევტი", "ფიზიოთერაპევტი", "ანესთეზიოლოგი"].includes(r));
+            const isAdmin = userOriginalRoles.some(r => ["ადმინისტრატორი"].includes(r));
+            const isAccountant = userOriginalRoles.some(r => ["ბუღალტერი"].includes(r));
+            const isReceptionist = userOriginalRoles.some(r => ["რეგისტრატორი"].includes(r));
+            const isLabTech = userOriginalRoles.some(r => ["ლაბორანტი"].includes(r));
+            const isPharmacist = userOriginalRoles.some(r => ["ფარმაცევტი"].includes(r));
+
+            const menuItemsDef = [
+                { title: "🏠 მთავარი", href: "dashboard.html", show: true },
+                { title: "👤 პაციენტების სია", href: "patients.html", show: true },
+                { title: "📅 კალენდარი", href: "calendar.html", show: true },
+                { title: "📝 EMR", href: "emr.html", show: isMedical || isAdmin },
+                { title: "📃 თანამშრომლები", href: "doctros.html", show: isAdmin },
+                { title: "📄 სერვისები", href: "services.html", show: isAdmin },
+                { title: "🧪 ლაბორატორია", href: "laboratory.html", show: isMedical || isAdmin },
+                { title: "📦 საწყობი", href: "inventory.html", show: isPharmacist || isLabTech || isAdmin },
+                { title: "💰 ბილინგი", href: "billing.html", show: isReceptionist || isAccountant || isAdmin },
+                { title: "📊 რეპორტები", href: "reports.html", show: isAdmin || isAccountant },
+                { title: "💬 კომუნიკაცია", href: "messages.html", show: true },
+                { title: "⚙️ პარამეტრები", href: "settings.html", show: true },
+                { title: "🚪 გამოსვლა", href: "exit.html", show: true }
+            ];
+
+            menuItemsDef.forEach(item => {
+                if (item.show) {
+                    const li = document.createElement("li");
+                    li.className = "menu-item";
+                    const a = document.createElement("a");
+                    a.href = item.href;
+                    
+                    if (item.title === "💬 კომუნიკაცია") {
+                        const iconSpan = document.createElement("span");
+                        iconSpan.style.position = "relative";
+                        iconSpan.style.display = "inline-block";
+                        iconSpan.innerHTML = "💬";
+                        
+                        // Check for unread messages
+                        const allMessages = JSON.parse(localStorage.getItem("messages")) || [];
+                        const hasUnread = allMessages.some(m => m.toId === currentUser.id && !m.read);
+                        
+                        if (hasUnread) {
+                            const redDot = document.createElement("span");
+                            redDot.style.position = "absolute";
+                            redDot.style.top = "-2px";
+                            redDot.style.right = "-2px";
+                            redDot.style.width = "8px";
+                            redDot.style.height = "8px";
+                            redDot.style.backgroundColor = "red";
+                            redDot.style.borderRadius = "50%";
+                            iconSpan.appendChild(redDot);
+                        }
+                        
+                        a.appendChild(iconSpan);
+                        a.appendChild(document.createTextNode(" კომუნიკაცია"));
+                    } else {
+                        a.textContent = item.title;
+                    }
+                    
+                    li.appendChild(a);
+                    ul.appendChild(li);
+                }
+            });
+        }
+
+        // --- Global Page Access Control ---
+        const currentPagePath = window.location.pathname.split("/").pop();
+        
+        if (currentPagePath === 'reports.html' && !isAdmin && !isAccountant) {
+            window.location.href = 'dashboard.html';
+        }
+        if ((currentPagePath === 'doctros.html' || currentPagePath === 'services.html') && !isAdmin) {
+            window.location.href = 'dashboard.html';
+        }
+        if (currentPagePath === 'emr.html' && !isMedical && !isAdmin) {
+            window.location.href = 'dashboard.html';
+        }
+        if (currentPagePath === 'laboratory.html' && !isMedical && !isAdmin) {
+            window.location.href = 'dashboard.html';
+        }
+        if (currentPagePath === 'inventory.html' && !isPharmacist && !isLabTech && !isAdmin) {
+            window.location.href = 'dashboard.html';
+        }
+        if (currentPagePath === 'billing.html' && !isReceptionist && !isAccountant && !isAdmin) {
+            window.location.href = 'dashboard.html';
         }
 
         // Apply Global Permissions

@@ -14,6 +14,14 @@ document.addEventListener("DOMContentLoaded", function() {
             clinicNameInput.style.backgroundColor = "#f0f0f0";
             clinicNameInput.style.color = "#999";
             clinicNameInput.title = "მხოლოდ ადმინისტრატორს შეუძლია შეცვლა";
+            
+            // Disable the save button too
+            const saveBtn = document.querySelector('button[type="button"]');
+            if (saveBtn && saveBtn.innerText.includes("შენახვა") && !saveBtn.id) {
+                saveBtn.disabled = true;
+                saveBtn.style.opacity = "0.5";
+                saveBtn.style.cursor = "not-allowed";
+            }
         }
     }
 

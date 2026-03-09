@@ -18,6 +18,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const testCodeInput = document.getElementById("testCode");
     const priceInput = document.getElementById("price");
 
+
+    const user = JSON.parse(localStorage.getItem("currentUser"));
+    const userRoles = user && user.originalRoles ? user.originalRoles.split(',').map(r => r.trim()) : [];
+    const isLabTech = userRoles.includes("ლაბორანტი") || (user && user.role === 'admin');
+
+    if (!isLabTech && addLabBtn) {
+        addLabBtn.style.display = 'none';
+    }
+
     // --- Initialization ---
     populateDropdowns();
     renderLabOrders();
@@ -241,13 +250,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let actionButtons = '';
             if (o.status !== "Completed") {
-                actionButtons += `<button class="result-btn" style="flex: 1; background-color: #2196f3; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;">პასუხის შეყვანა</button>`;
+                if (isLabTech) {
+                    actionButtons += `<button class="result-btn" style="flex: 1; background-color: #2196f3; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;">პასუხის შეყვანა</button>`;
+                }
             } else {
                 actionButtons += `<button class="print-btn" style="flex: 1; background-color: #607d8b; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;">🖨️ ბეჭდვა</button>`;
             }
             
-            // Delete button (Admin only? Or safe to add for all for now)
-            actionButtons += `<button class="delete-btn" style="flex: 0 0 auto; background-color: #f44336; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>`;
+            if (isLabTech) {
+                actionButtons += `<button class="delete-btn" style="flex: 0 0 auto; background-color: #f44336; color: white; border: none; padding: 8px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-trash"></i></button>`;
+            }
 
             card.innerHTML = `
                 <div class="patient-header">

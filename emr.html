@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | EMR</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        .patient-emr-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .emr-details {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <!-- Menu injected by JS -->
+    <ul></ul>
+</nav>
+</div>
+</header>
+
+<div class="main_content">
+    <h2>EMR (პაციენტის ისტორია)</h2>
+    <div style="background: white; padding: 20px; border-radius: 8px; margin-top: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <p>ელექტრონული სამედიცინო ჩანაწერების (EMR) სისტემა.</p>
+        <p>აქ ექიმებს და სამედიცინო პერსონალს შეუძლიათ მართონ პაციენტების დიაგნოზები, დანიშნულებები და ანამნეზი.</p>
+        
+        <div style="margin-top: 20px; display: flex; gap: 10px;">
+            <input type="text" id="emr-search" placeholder="მოძებნეთ პაციენტი სახელით ან პირადი ნომრით..." style="padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 4px;">
+            <button id="emr-search-btn" style="padding: 10px 20px; background: #2196f3; color: white; border: none; border-radius: 4px; cursor: pointer;">ძიება</button>
+        </div>
+        
+        <hr style="margin: 30px 0; border: none; border-top: 1px solid #eee;">
+        
+        <div id="emr-results">
+            <div style="text-align: center; color: #999; padding: 40px;">
+                <i class="fa-solid fa-notes-medical" style="font-size: 48px; margin-bottom: 10px;"></i>
+                <h3>აირჩიეთ პაციენტი ისტორიის სანახავად</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+<script src="emr.js"></script>
+</body>
+</html>

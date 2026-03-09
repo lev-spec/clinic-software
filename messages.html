@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinic Healthy | შიდა კომუნიკაცია</title>
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+        .user-item {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .user-item:hover {
+            background: #f0f0f0;
+        }
+        .user-item.active {
+            background: #e3f2fd;
+        }
+        .unread-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: red;
+            border-radius: 50%;
+            margin-left: 5px;
+        }
+        .message-bubble {
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+            max-width: 70%;
+        }
+        .message-row {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+        .message-row.sent {
+            align-items: flex-end;
+        }
+        .message-row.received {
+            align-items: flex-start;
+        }
+        .message-row.sent .message-bubble {
+            background: #e3f2fd;
+            text-align: left;
+        }
+        .message-row.received .message-bubble {
+            background: white;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+<header>
+<div class="left_main_container">
+    <div class="top_left_container">
+        <img class="clinic_logo" id="clinic-logo" src="imgs/clinic-logo.png" alt="საავადმყოფოს ლოგო">
+    </div>
+
+<nav class="bottom_left_container">
+    <!-- Menu injected by JS -->
+    <ul></ul>
+</nav>
+</div>
+</header>
+
+<div class="main_content" style="display: flex; flex-direction: column; height: 90vh;">
+    <h2>შიდა კომუნიკაცია</h2>
+    
+    <div style="display: flex; gap: 20px; flex: 1; margin-top: 20px; overflow: hidden;">
+        <!-- Users List -->
+        <div style="width: 300px; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px; display: flex; flex-direction: column;">
+            <input type="text" id="user-search" placeholder="ძიება..." style="width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box;">
+            
+            <div id="users-list" style="overflow-y: auto; flex: 1;">
+                <!-- Users injected here -->
+            </div>
+        </div>
+
+        <!-- Chat Area -->
+        <div id="chat-area" style="flex: 1; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); display: flex; flex-direction: column;">
+            <div id="chat-header" style="padding: 15px; border-bottom: 1px solid #eee; font-weight: bold; background: #f9f9f9; border-radius: 8px 8px 0 0;">
+                აირჩიეთ თანამშრომელი
+            </div>
+            
+            <div id="messages-container" style="flex: 1; padding: 20px; overflow-y: auto; background: #fafafa;">
+                <div style="text-align: center; color: #999; margin-top: 50px;">
+                    აირჩიეთ ჩატი მარცხენა პანელიდან
+                </div>
+            </div>
+            
+            <div style="padding: 15px; border-top: 1px solid #eee; display: flex; gap: 10px;">
+                <input type="text" id="message-input" placeholder="დაწერეთ შეტყობინება..." style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" disabled>
+                <button id="send-btn" style="padding: 10px 20px; background: #2196f3; color: white; border: none; border-radius: 4px; cursor: pointer;" disabled>
+                    <i class="fa-solid fa-paper-plane"></i> გაგზავნა
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="dashboard.js"></script>
+<script src="messages.js"></script>
+</body>
+</html>
