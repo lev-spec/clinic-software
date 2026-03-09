@@ -12,37 +12,32 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (currentUser && !isLoginPage) {
-        // Inject User Info as a floating badge
-        const userInfoDiv = document.createElement("div");
-        userInfoDiv.id = "user-info-panel";
-        userInfoDiv.style.position = "fixed";
-        userInfoDiv.style.top = "15px";
-        userInfoDiv.style.right = "20px";
-        userInfoDiv.style.background = "#fff";
-        userInfoDiv.style.padding = "8px 15px";
-        userInfoDiv.style.borderRadius = "20px";
-        userInfoDiv.style.boxShadow = "0 2px 5px rgba(0,0,0,0.1)";
-        userInfoDiv.style.color = "#333";
-        userInfoDiv.style.fontSize = "0.9em";
-        userInfoDiv.style.zIndex = "1000";
-        userInfoDiv.style.display = "flex";
-        userInfoDiv.style.alignItems = "center";
-        userInfoDiv.style.gap = "10px";
+        // Inject User Info bar at top of main content area (inline, not floating)
+        const mainContent = document.querySelector(".main_content");
+        if (mainContent) {
+            const userInfoBar = document.createElement("div");
+            userInfoBar.id = "user-info-bar";
+            userInfoBar.className = "user-info-bar";
 
-        if (currentUser.username === 'admin1234') {
-            userInfoDiv.innerHTML = `<strong>ადმინისტრაცია</strong>`;
-        } else {
-            userInfoDiv.innerHTML = `
-                <div style="width: 28px; height: 28px; background: #2196f3; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold;">
-                    ${currentUser.firstName.charAt(0)}${currentUser.lastName.charAt(0)}
-                </div>
-                <div>
-                    <div style="font-weight: bold; line-height: 1.2;">${currentUser.firstName} ${currentUser.lastName}</div>
-                    <div style="font-size: 0.8em; color: #666;">${currentUser.originalRoles || (currentUser.role === 'admin' ? 'ადმინისტრატორი' : 'ექიმი')}</div>
-                </div>
-            `;
+            const userInfoBadge = document.createElement("div");
+            userInfoBadge.className = "user-info-badge";
+
+            if (currentUser.username === 'admin1234') {
+                userInfoBadge.innerHTML = `<i class="fa-solid fa-shield-halved" style="color: #1a73e8;"></i> <strong>ადმინისტრაცია</strong>`;
+            } else {
+                userInfoBadge.innerHTML = `
+                    <div class="user-avatar">
+                        ${currentUser.firstName.charAt(0)}${currentUser.lastName.charAt(0)}
+                    </div>
+                    <span class="user-name">${currentUser.firstName} ${currentUser.lastName}</span>
+                    <span class="user-role-separator">|</span>
+                    <span class="user-role">${currentUser.originalRoles || (currentUser.role === 'admin' ? 'ადმინისტრატორი' : 'ექიმი')}</span>
+                `;
+            }
+
+            userInfoBar.appendChild(userInfoBadge);
+            mainContent.insertBefore(userInfoBar, mainContent.firstChild);
         }
-        document.body.appendChild(userInfoDiv);
 
         // --- Generate Sidebar Menu based on Roles ---
         const navContainer = document.querySelector(".bottom_left_container");
