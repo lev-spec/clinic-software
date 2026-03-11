@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 { title: "📃 თანამშრომლები", href: "doctros.html", show: isAdmin },
                 { title: "📄 სერვისები", href: "services.html", show: isAdmin },
                 { title: "🧪 ლაბორატორია", href: "laboratory.html", show: isMedical || isAdmin },
+                { title: "💊 აფთიაქი/რეცეპტები", href: "pharmacy.html", show: isMedical || isPharmacist || isAdmin },
                 { title: "📦 საწყობი", href: "inventory.html", show: isPharmacist || isLabTech || isAdmin },
                 { title: "💰 ბილინგი", href: "billing.html", show: isReceptionist || isAccountant || isAdmin },
                 { title: "📊 რეპორტები", href: "reports.html", show: isAdmin || isAccountant },
@@ -178,6 +179,9 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = 'dashboard.html';
         }
         if (currentPagePath === 'laboratory.html' && !isMedical && !isAdmin) {
+            window.location.href = 'dashboard.html';
+        }
+        if (currentPagePath === 'pharmacy.html' && !isMedical && !isPharmacist && !isAdmin) {
             window.location.href = 'dashboard.html';
         }
         if (currentPagePath === 'inventory.html' && !isPharmacist && !isLabTech && !isAdmin) {
